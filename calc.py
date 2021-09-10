@@ -55,8 +55,17 @@ class Calculator:
         self.create_digit_buttons()  # have to be below buttons_frame cus frame has to be created before btns
         self.create_operation_buttons()
         self.create_special_buttons()
+        self.bind_keys()
 
 
+    def bind_keys(self):            # accepts keyboard inputs
+        self.window.bind("<Return>", lambda event: self.evaluate())     # pressing then enter = equal btn
+
+        for key in self.digits:
+            self.window.bind(str(key), lambda event, digit=key: self.add_to_expression(digit))
+        for key in self.operations:
+            self.window.bind(key, lambda event, operator=key: self.append_operator(operator))
+            
 
     def create_special_buttons(self): 
         self.create_equal_button()
@@ -87,7 +96,7 @@ class Calculator:
         return total_label, label
 
     def create_display_frame(self):
-        frame = tk.Frame(self.window, heigh=210, bg=DARK)
+        frame = tk.Frame(self.window, heigh=150, bg=DARK)
         frame.pack(
             expand=True, fill='both'
         )  # organizes widgets in blocks before placing them in the parent widget.
@@ -155,12 +164,14 @@ class Calculator:
     def evaluate(self):                                             # for equal btns
         self.total_expression += self.current_expression
         self.update_total_label()
+        try:
+            self.current_expression = str(eval(self.total_expression))  # eval, calc then display on main screen
 
-        self.current_expression = str(eval(self.total_expression))  # eval, calc then display on main screen
-
-        self.total_expression = ""                                  # total value is reset
-
-        self.update_label()
+            self.total_expression = ""                                  # total value is reset
+        except Exception as e:
+            self.current_expression = "Error"                           # catch 1/0 = error
+        finally:
+            self.update_label()
 
     def create_equal_button(self):
         button = tk.Button(self.buttons_frame,
@@ -219,15 +230,18 @@ class Calculator:
 
 
     def create_buttons_frame(self):
-        frame = tk.Frame(self.window, heigh=221)
+        frame = tk.Frame(self.window, height=200)
         frame.pack(expand=True, fill='both')
         return frame
 
-    def update_total_label(self):  # update top display
-        self.total_label.config(text=self.total_expression)
+    def update_total_label(self):                                    # update top display
+        expression = self.total_expression
+        for operator, symbol in self.operations.items():
+            expression = expression.replace(operator, f" {symbol} ") # show x and % symbol
+        self.total_label.config(text=expression)
 
-    def update_label(self):  # update current display
-        self.label.config(text=self.current_expression)
+    def update_label(self):                                 # update current display
+        self.label.config(text=self.current_expression[:11])        # show 11 digits
 
     def run(self):
         self.window.mainloop()  # loop forever until user closes the program
