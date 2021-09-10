@@ -1,3 +1,7 @@
+
+
+# https://www.fileformat.info/info/unicode/char/a.htm
+
 import tkinter as tk
 
 DARK = '#313842'
@@ -126,8 +130,7 @@ class Calculator:
                 font=DEFAULT_FONT,
                 borderwidth=0,
                 command=lambda x=operator: self.append_operator(x))
-            button.grid(row=i, column=4,
-                        sticky=tk.NSEW)  # last column, vertical
+            button.grid(row=i, column=4, sticky=tk.NSEW)  # last column, vertical
             i += 1
 
     def clear(self):
@@ -144,9 +147,9 @@ class Calculator:
                            font=DEFAULT_FONT,
                            borderwidth=0,
                            command=self.clear)
-        button.grid(row=0, column=1, columnspan=3, sticky=tk.NSEW)
+        button.grid(row=0, column=1, sticky=tk.NSEW)
 
-    def evaluate(self):  # for equal btns
+    def evaluate(self):                                             # for equal btns
         self.total_expression += self.current_expression
         self.update_total_label()
 
@@ -164,7 +167,7 @@ class Calculator:
                            font=DEFAULT_FONT,
                            borderwidth=0,
                            command=self.evaluate)
-        button.grid(row=4, column=4, sticky=tk.NSEW) 
+        button.grid(row=4, column=3, sticky=tk.NSEW) 
 
     def delete(self):
         self.current_expression = self.current_expression[:-1]    # delete last digit   
@@ -172,13 +175,26 @@ class Calculator:
 
     def create_delete_button(self):
         button = tk.Button(self.buttons_frame,
-                           text='D',
+                           text='\u232B',
                            bg=OPRN,
                            fg=LABEL,
-                           font=DEFAULT_FONT,
+                           font=SMALL_FONT,
                            borderwidth=0,
                            command=self.delete)
-        button.grid(row=4, column=3, sticky=tk.NSEW)  
+        button.grid(row=4, column=4, sticky=tk.NSEW)  
+
+    def square(self):
+        self.current_expression = str(eval(f"{self.current_expression}**2"))
+
+    def create_square_button(self):
+        button = tk.Button(self.buttons_frame,
+                    text='\u232B',
+                    bg=OPRN,
+                    fg=LABEL,
+                    font=DEFAULT_FONT,
+                    borderwidth=0,
+                    command=self.square)
+        button.grid(row=0, column=2, sticky=tk.NSEW)  
 
 
     def create_buttons_frame(self):
