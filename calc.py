@@ -63,6 +63,7 @@ class Calculator:
         self.create_clear_button()
         self.create_delete_button()
         self.create_square_button()
+        self.create_sqrt_button()
 
     def create_display_labels(self):
         total_label = tk.Label(self.display_frame,
@@ -111,6 +112,7 @@ class Calculator:
                         column=grid_value[1],
                         sticky=tk.NSEW)  # NSEW = stick everywhere
 
+
     def append_operator(self, operator):
         self.current_expression += operator  # append the operator to current expression
         self.total_expression += self.current_expression
@@ -132,6 +134,7 @@ class Calculator:
             button.grid(row=i, column=4, sticky=tk.NSEW)  # last column, vertical
             i += 1
 
+
     def clear(self):
         self.current_expression = ""
         self.total_expression = ""
@@ -147,6 +150,7 @@ class Calculator:
                            borderwidth=0,
                            command=self.clear)
         button.grid(row=0, column=1, sticky=tk.NSEW)
+
 
     def evaluate(self):                                             # for equal btns
         self.total_expression += self.current_expression
@@ -166,7 +170,8 @@ class Calculator:
                            font=DEFAULT_FONT,
                            borderwidth=0,
                            command=self.evaluate)
-        button.grid(row=4, column=3, sticky=tk.NSEW) 
+        button.grid(row=4, column=4, sticky=tk.NSEW) 
+
 
     def delete(self):
         self.current_expression = self.current_expression[:-1]    # delete last digit   
@@ -180,9 +185,10 @@ class Calculator:
                            font=SMALL_FONT,
                            borderwidth=0,
                            command=self.delete)
-        button.grid(row=4, column=4, sticky=tk.NSEW)  
+        button.grid(row=4, column=3, sticky=tk.NSEW)  
 
-    def square(self):                                              # f"" = str.format()
+
+    def square(self):                                              # f"" = str.format(), ** = power
         self.current_expression = str(eval(f"{self.current_expression}**2"))
         self.update_label()
 
@@ -195,6 +201,21 @@ class Calculator:
                     borderwidth=0,
                     command=self.square)
         button.grid(row=0, column=2, sticky=tk.NSEW)  
+
+
+    def sqrt(self):                                              
+        self.current_expression = str(eval(f"{self.current_expression}**0.5"))
+        self.update_label()
+
+    def create_sqrt_button(self):
+        button = tk.Button(self.buttons_frame,
+                    text='\u221a',
+                    bg=OPRN,
+                    fg=LABEL,
+                    font=DEFAULT_FONT,
+                    borderwidth=0,
+                    command=self.sqrt)
+        button.grid(row=0, column=3, sticky=tk.NSEW)  
 
 
     def create_buttons_frame(self):
