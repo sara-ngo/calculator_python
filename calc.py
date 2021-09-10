@@ -54,16 +54,15 @@ class Calculator:
 
         self.create_digit_buttons()  # have to be below buttons_frame cus frame has to be created before btns
         self.create_operation_buttons()
-        self.create_clear_button()
-        self.create_equal_button()
-        self.create_delete_button()
+        self.create_special_buttons()
 
 
 
-    def create_special_buttons(self):  # for = and CLR
+    def create_special_buttons(self): 
         self.create_equal_button()
         self.create_clear_button()
         self.create_delete_button()
+        self.create_square_button()
 
     def create_display_labels(self):
         total_label = tk.Label(self.display_frame,
@@ -141,7 +140,7 @@ class Calculator:
 
     def create_clear_button(self):
         button = tk.Button(self.buttons_frame,
-                           text='CLR',
+                           text='C',
                            bg=OPRN,
                            fg=LABEL,
                            font=DEFAULT_FONT,
@@ -183,12 +182,13 @@ class Calculator:
                            command=self.delete)
         button.grid(row=4, column=4, sticky=tk.NSEW)  
 
-    def square(self):
+    def square(self):                                              # f"" = str.format()
         self.current_expression = str(eval(f"{self.current_expression}**2"))
+        self.update_label()
 
     def create_square_button(self):
         button = tk.Button(self.buttons_frame,
-                    text='\u232B',
+                    text='x\u00b2',
                     bg=OPRN,
                     fg=LABEL,
                     font=DEFAULT_FONT,
