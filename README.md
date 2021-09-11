@@ -13,7 +13,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/sara-ngo/calculator_python">
-    <img src="img/image.jpg" alt="Logo" width="80" height="80">
+    <img src="img/image1.PNG" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Calculator</h3>
