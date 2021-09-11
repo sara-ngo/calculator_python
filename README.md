@@ -39,7 +39,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<img src="img/Capture1.PNG" alt="Logo" width="80" height="80">
+<img src="img/Capture1.PNG" alt="Logo">
 
 ### Built With
 
